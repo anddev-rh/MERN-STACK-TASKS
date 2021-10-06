@@ -1,11 +1,40 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/', (require, response) => {
-  response.json({
-    status: 'API works!'
-  });
+const Task = require('../models/task')
+
+
+router.get('/', async (require, response) => {
+  const tasks = await Task.find();
+  response.json(tasks);
+
 });
+
+router.get('/:id', async (req, res) => {
+  const task = await Task.findById(req.params.id);
+  res.json(task)
+})
+
+router.post('/', async (req, res) => {
+  const { title, description } = req.body;
+  const task = new Task({ title, description });
+  await task.save();
+  res.json({ status: 'task saved' });
+})
+
+router.put('/:id', async (req, res) => {
+  const { title, description } = req.body;
+  const newTask = { title, description };
+  await Task.findByIdAndUpdate(req.params.id, newTask);
+  res.json({ status: 'task updated' })
+})
+
+
+router.delete('/:id', async (req, res) => {
+  await Task.findByIdAndRemove(req.params.id);
+  res.json({ status: 'Task deleted' });
+})
+
 
 module.exports = router;
 
