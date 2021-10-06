@@ -1,15 +1,11 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App.jsx';
 
 
-const App = () => {
-  return <div>HOLA MUNDO</div>
-}
 
 
 ReactDOM.render(
-
-  <App />
-  ,
-  document.getElementById('app')
+  <App />,
+  document.getElementById('root')
 )
